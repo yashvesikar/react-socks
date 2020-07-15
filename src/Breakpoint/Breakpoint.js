@@ -16,6 +16,7 @@ export default class Breakpoint extends React.Component {
   extractBreakpointAndModifierFromProps(allProps) {
     let breakpoint;
     let modifier;
+    let isServer = false;
     let tagName = allProps.tagName || 'div';
     let className = allProps.className || '';
     let style = allProps.style;
@@ -28,7 +29,9 @@ export default class Breakpoint extends React.Component {
         usesCustomQuery = true;
       } else if (prop !== 'tagName' && prop !== 'className' && prop !== 'style') {
         breakpoint = prop;
-      } 
+      } else if ( prop === 'isServer' ) {
+        isServer = true;
+      }
     });
 
     if (modifier === 'up' || modifier === 'down' || modifier === 'only') {
@@ -49,12 +52,13 @@ export default class Breakpoint extends React.Component {
 
   render() {
     const { children, ...rest } = this.props;
-    const { 
-      breakpoint, 
-      modifier, 
-      className, 
-      tagName, 
-      style, 
+    const {
+      breakpoint,
+      modifier,
+      isServer,
+      className,
+      tagName,
+      style,
       customQuery
     } = this.extractBreakpointAndModifierFromProps(rest);
 
@@ -65,7 +69,8 @@ export default class Breakpoint extends React.Component {
       modifier,
       currentBreakpointName,
       currentWidth,
-      customQuery
+      customQuery,
+      isServer
     });
 
     if (!shouldRender) return null;
@@ -84,6 +89,7 @@ Breakpoint.propTypes = {
   up: PropTypes.bool,
   down: PropTypes.bool,
   only: PropTypes.bool,
+  server: PropTypes.bool,
   tagName: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.oneOfType([

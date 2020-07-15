@@ -64,8 +64,10 @@ export class BreakpointUtil {
     return nextBreakpointWidth;
   }
 
-  shouldRender({ breakpointName, modifier, currentBreakpointName, currentWidth, customQuery }) {
-    if (modifier === 'only') {
+  shouldRender({ breakpointName, modifier, currentBreakpointName, currentWidth, customQuery, isServer }) {
+    if (isServer) {
+      return true;
+    } else if (modifier === 'only') {
       if (breakpointName === currentBreakpointName) return true;
     } else if (modifier === 'up') {
       const breakpointWidth = this.getBreakpointWidth(breakpointName);
