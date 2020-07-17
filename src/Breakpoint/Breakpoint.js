@@ -16,7 +16,6 @@ export default class Breakpoint extends React.Component {
   extractBreakpointAndModifierFromProps(allProps) {
     let breakpoint;
     let modifier;
-    let isServer = false;
     let tagName = allProps.tagName || 'div';
     let className = allProps.className || '';
     let style = allProps.style;
@@ -30,9 +29,6 @@ export default class Breakpoint extends React.Component {
       } else if (prop !== 'tagName' && prop !== 'className' && prop !== 'style') {
         breakpoint = prop;
       }
-      if ( prop === 'isServer' ) {
-        isServer = true;
-      }
     });
 
     if (modifier === 'up' || modifier === 'down' || modifier === 'only') {
@@ -44,7 +40,6 @@ export default class Breakpoint extends React.Component {
     return {
       breakpoint,
       modifier,
-      isServer,
       tagName,
       className,
       style,
@@ -57,14 +52,13 @@ export default class Breakpoint extends React.Component {
     const {
       breakpoint,
       modifier,
-      isServer,
       className,
       tagName,
       style,
       customQuery
     } = this.extractBreakpointAndModifierFromProps(rest);
 
-    const { currentBreakpointName, currentWidth, isServer: serverContext } = this.context;
+    const { currentBreakpointName, currentWidth, isServer } = this.context;
 
     const shouldRender = BreakpointUtil.shouldRender({
       breakpointName: breakpoint,
@@ -83,7 +77,7 @@ export default class Breakpoint extends React.Component {
 
     const Tag = tagName
     return (
-      <Tag className={`breakpoint__${breakpoint}-${modifier} ${className}`} style={serverContext ? serverStyle : style}>{children}</Tag>
+      <Tag className={`breakpoint__${breakpoint}-${modifier} ${className}`} style={isServer ? serverStyle : style}>{children}</Tag>
     );
   }
 }
@@ -95,7 +89,6 @@ Breakpoint.propTypes = {
   up: PropTypes.bool,
   down: PropTypes.bool,
   only: PropTypes.bool,
-  isServer: PropTypes.bool,
   tagName: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.oneOfType([
