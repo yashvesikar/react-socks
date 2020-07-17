@@ -58,6 +58,12 @@ export class BreakpointUtil {
         }
 
         break;
+      } else if (currentBreakpointIndex === 0) {
+        if (this.allBreakpoints.length > currentBreakpointIndex) {
+          let nextBreakpointObj = this.allBreakpoints[currentBreakpointIndex];
+          nextBreakpointName = Object.keys(nextBreakpointObj)[0];
+          nextBreakpointWidth = nextBreakpointObj[nextBreakpointName];
+        }
       }
     }
 
