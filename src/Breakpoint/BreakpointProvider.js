@@ -19,7 +19,6 @@ export default class BreakpointProvider extends React.Component {
     this.state = {
       currentWidth: currentWidth,
       currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth),
-      isServer: !isBrowser
     };
 
     this.handleResize = debounce(this.handleResize.bind(this), 100);
@@ -41,20 +40,19 @@ export default class BreakpointProvider extends React.Component {
     this.setState({
       currentWidth: currentWidth,
       currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth),
-      isServer: !isBrowser
     });
   }
 
   render() {
     const { children } = this.props;
-    const { currentWidth, currentBreakpointName, isServer } = this.state;
+    const { currentWidth, currentBreakpointName } = this.state;
 
     return (
       <BreakpointContext.Provider
         value={{
           currentWidth,
           currentBreakpointName,
-          isServer
+          isServer: !isBrowser
         }}
       >
         { children }
