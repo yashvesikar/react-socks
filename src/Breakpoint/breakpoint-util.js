@@ -65,8 +65,8 @@ export class BreakpointUtil {
   }
 
   shouldRender({ breakpointName, modifier, currentBreakpointName, currentWidth, customQuery, isServer }) {
-    if (isServer) {
-      return !isBrowser;
+    if (isServer && !isBrowser) {
+      return true;
     } else if (modifier === 'only') {
       if (breakpointName === currentBreakpointName) return true;
     } else if (modifier === 'up') {
