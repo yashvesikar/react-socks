@@ -43,6 +43,7 @@ export default class Breakpoint extends React.Component {
     return {
       breakpoint,
       modifier,
+      isServer,
       tagName,
       className,
       style,
