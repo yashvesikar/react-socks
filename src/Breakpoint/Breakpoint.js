@@ -29,7 +29,8 @@ export default class Breakpoint extends React.Component {
         usesCustomQuery = true;
       } else if (prop !== 'tagName' && prop !== 'className' && prop !== 'style') {
         breakpoint = prop;
-      } else if ( prop === 'isServer' ) {
+      }
+      if ( prop === 'isServer' ) {
         isServer = true;
       }
     });
