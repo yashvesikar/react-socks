@@ -47,13 +47,14 @@ export default class BreakpointProvider extends React.Component {
 
   render() {
     const { children } = this.props;
-    const { currentWidth, currentBreakpointName } = this.state;
+    const { currentWidth, currentBreakpointName, isServer } = this.state;
 
     return (
       <BreakpointContext.Provider
         value={{
           currentWidth,
           currentBreakpointName,
+          isServer
         }}
       >
         { children }
