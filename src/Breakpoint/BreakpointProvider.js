@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import BreakpointUtil from './breakpoint-util';
 import debounce from 'lodash.debounce';
+import { isBrowser } from "browser-or-node";
 
 const BreakpointContext = React.createContext({
   currentWidth: 9999,
-  currentBreakpointName: ''
+  currentBreakpointName: '',
+  isServer: !isBrowser
 });
 
 export default class BreakpointProvider extends React.Component {
@@ -16,7 +18,8 @@ export default class BreakpointProvider extends React.Component {
 
     this.state = {
       currentWidth: currentWidth,
-      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth)
+      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth),
+      isServer: !isBrowser
     };
 
     this.handleResize = debounce(this.handleResize.bind(this), 100);
@@ -24,6 +27,7 @@ export default class BreakpointProvider extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
+    this.setState({isServer: !isBrowser})
   }
 
   componentWillUnmount() {
@@ -36,7 +40,8 @@ export default class BreakpointProvider extends React.Component {
 
     this.setState({
       currentWidth: currentWidth,
-      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth)
+      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth),
+      isServer: !isBrowser
     });
   }
 

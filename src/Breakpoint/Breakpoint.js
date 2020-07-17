@@ -64,7 +64,7 @@ export default class Breakpoint extends React.Component {
       customQuery
     } = this.extractBreakpointAndModifierFromProps(rest);
 
-    const { currentBreakpointName, currentWidth } = this.context;
+    const { currentBreakpointName, currentWidth, isServer: serverContext } = this.context;
 
     const shouldRender = BreakpointUtil.shouldRender({
       breakpointName: breakpoint,
@@ -83,7 +83,7 @@ export default class Breakpoint extends React.Component {
 
     const Tag = tagName
     return (
-      <Tag className={`breakpoint__${breakpoint}-${modifier} ${className}`} style={isServer ? serverStyle : style}>{children}</Tag>
+      <Tag className={`breakpoint__${breakpoint}-${modifier} ${className}`} style={serverContext ? serverStyle : style}>{children}</Tag>
     );
   }
 }
