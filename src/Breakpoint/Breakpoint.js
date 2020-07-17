@@ -76,10 +76,14 @@ export default class Breakpoint extends React.Component {
     });
 
     if (!shouldRender) return null;
+    const serverStyle = {
+      ...style,
+      display: 'none'
+    }
 
     const Tag = tagName
     return (
-      <Tag className={`breakpoint__${breakpoint}-${modifier} ${className}`} style={style}>{children}</Tag>
+      <Tag className={`breakpoint__${breakpoint}-${modifier} ${className}`} style={isServer ? serverStyle : style}>{children}</Tag>
     );
   }
 }
@@ -91,7 +95,7 @@ Breakpoint.propTypes = {
   up: PropTypes.bool,
   down: PropTypes.bool,
   only: PropTypes.bool,
-  server: PropTypes.bool,
+  isServer: PropTypes.bool,
   tagName: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.oneOfType([
